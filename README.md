@@ -1,8 +1,11 @@
 ## meteo_si
 <!-- [![Build Status](https://travis-ci.org/uwescience/meteo_si.svg?branch=master)](https://travis-ci.org/uwescience/meteo_si) -->
 
+[![Documentation Status](https://readthedocs.org/projects/meteo-si/badge/?version=latest)](https://meteo-si.readthedocs.io/en/latest/?badge=latest)
+
 Meteo SI is a collection of functions for atmospheric sciences following the 
-SI-convention (unless stated otherwise)
+SI-convention (unless stated otherwise). See 
+https://meteo-si.readthedocs.io/en/latest/ for documentation. 
 
 <!-- ### Module code
 
