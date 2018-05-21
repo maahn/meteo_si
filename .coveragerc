@@ -1,7 +1,7 @@
 [run]
 branch = True
-source = shablona/*
-include = shablona/*
+source = meteo_si/*
+include = meteo_si/*
 omit = */setup.py
 [report]
-include = shablona/*
+include = meteo_si/*

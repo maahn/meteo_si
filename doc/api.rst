@@ -5,7 +5,7 @@ API
 Classes
 -------
 
-.. currentmodule:: shablona
+.. currentmodule:: meteo_si
 
 .. autosummary::
    :template: class.rst
