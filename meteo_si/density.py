@@ -8,8 +8,8 @@ import numpy as np
 
 # from .due import due, Doi
 
-from .constants import Rair, Rvapor
-from . import humidity
+import meteo_si.constants
+import meteo_si.humidity
 # from .temperature import *
 
 
@@ -17,21 +17,32 @@ __all__ = ["moist_rho_rh", "moist_rho_q"]
 
 
 def moist_rho_rh(p, T, rh, *qm):
-    '''
-    Input:
-    p is in Pa
-    T is in K
-    rh is in Pa/Pa
-    Optional, several possible:
-    qm is in kg/kg other species which contribute to the air mass! (ice, snow,
-    cloud etc.)
+    """
+    Compute the arithmetic circular mean, ignoring NaNs.
 
-    Output:
-    density of moist air [kg/m^3]
+    Parameters
+    ----------
+    p :
+        Pressure in Pa
+    T:
+        Temperature in K
+    rh:
+        Relative humidity in Pa/Pa
+    *qm, list, optional
+        mixing ratios in kg/kg of other species which contribute to the air
+        mass! (ice, snow, cloud etc.)
 
-    Example:
+    Returns
+    -------
+
+    float :
+        Density of moist air [kg/m^3]
+
+    Example
+    -------
     moist_rho_rh(p,T,rh,q_ice,q_snow,q_rain,q_cloud,q_graupel,q_hail)
-    '''
+
+    """
     with np.errstate(divide='ignore', invalid='ignore'):
         if np.any(rh > 5):
             raise TypeError("rh must not be in %")
@@ -42,21 +53,32 @@ def moist_rho_rh(p, T, rh, *qm):
 
 
 def moist_rho_q(p, T, q, *qm):
-    '''
-    Input p is in Pa
-    T is in K
-    q is in kg/kg
-    Optional, several possible:
-    qm is in kg/kg other species which contribute to the air mass! (ice, snow,
-    cloud etc.)
+    """
+    Compute the arithmetic circular mean, ignoring NaNs.
 
-    Output:
-    density of moist air [kg/m^3]
+    Parameters
+    ----------
+    p :
+        Pressure in Pa
+    T:
+        Temperature in K
+    q:
+        specific humidity in kg/kg
+    *qm, list, optional
+        mixing ratios in kg/kg of other species which contribute to the air
+        mass! (ice, snow, cloud etc.)
 
-    Example:
+    Returns
+    -------
+
+    float :
+        Density of moist air [kg/m^3]
+
+    Example
+    -------
     moist_rho_q(p,T,q,q_ice,q_snow,q_rain,q_cloud,q_graupel,q_hail)
-    '''
 
+    """
     if len(qm) > 0:
         # get rid of masked data!
         qm[qm < 0] = 0
@@ -64,7 +86,7 @@ def moist_rho_q(p, T, q, *qm):
     else:
         qm = 0
 
-    moist_rho_q = p/(Rair*T*(1+(Rvapor/Rair-1)*q-qm))
+    moist_rho_q = p/(constants.Rair*T*(1+(constants.Rvapor/constants.Rair-1)*q-qm))
 
     if np.any(moist_rho_q < 0):
         if np.any(moist_rho_q < -0.001):

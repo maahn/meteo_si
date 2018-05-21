@@ -55,7 +55,8 @@ extensions = ['sphinx.ext.autodoc',
               'math_dollar',  # has to go before numpydoc
               'numpydoc',
               'github',
-              'sphinx_gallery.gen_gallery']
+              # 'sphinx_gallery.gen_gallery',
+              ]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -69,17 +70,17 @@ source_suffix = '.rst'
 # The master toctree document.
 master_doc = 'index'
 
-# --- Sphinx Gallery ---
-sphinx_gallery_conf = {
-    # path to your examples scripts
-    'examples_dirs': '../examples',
-    # path where to save gallery generated examples
-    'gallery_dirs': 'auto_examples',
-    # To auto-generate example sections in the API
-    'doc_module': ('meteo_si',),
-    # Auto-generated mini-galleries go here
-    'backreferences_dir': 'gen_api'
-}
+# # --- Sphinx Gallery ---
+# sphinx_gallery_conf = {
+#     # path to your examples scripts
+#     'examples_dirs': '../examples',
+#     # path where to save gallery generated examples
+#     'gallery_dirs': 'auto_examples',
+#     # To auto-generate example sections in the API
+#     'doc_module': ('meteo_si',),
+#     # Auto-generated mini-galleries go here
+#     'backreferences_dir': 'gen_api'
+# }
 
 # Automatically generate stub pages for API
 autosummary_generate = True
@@ -156,7 +157,7 @@ html_theme = 'alabaster'
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
-html_logo = '_static/logo.png'
+# html_logo = '_static/logo.png'
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
@@ -166,7 +167,7 @@ html_logo = '_static/logo.png'
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+# html_static_path = ['_static']
 
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied
@@ -281,7 +282,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
   ('index', 'meteo_si', 'meteo_si Documentation',
-   'Maximilian Maahn', 'meteo_si', 'One line description of project.',
+   'Maximilian Maahn', 'meteo_si', 'Functions for atmospheric Sciences',
    'Miscellaneous'),
 ]
 

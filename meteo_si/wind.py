@@ -5,7 +5,7 @@ import numpy as np
 # from .constants import *
 
 '''
-Helper functions to deal with wind observations.
+Functions to deal with wind observations.
 
 '''
 

@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+'''
+Constants relevant for atmospheric sciences.
+'''
 
 Grav = 9.80665  # m/s^2 der Wert fuer mittlere Breiten
 Rair = 287.04  # J/kg/K

@@ -9,26 +9,56 @@ import numpy as np
 
 # from .due import due, Doi
 
-from .constants import Tnull, Rvapor, Rair
-from . import humidity
+import meteo_si.constants
+import meteo_si.humidity
 
 
 __all__ = ["kelvin_2_celsius", "celsius_to_kelvin", "T_virt_rh", "T_virt_q"]
 
 
-def kelvin_2_celsius(T):
-    '''
-    Calculate temperature in Celsius
-    '''
+'''
+Functions to deal with temperature.
 
-    return T + Tnull
+'''
+
+
+def kelvin_2_celsius(T):
+    """
+    Convert the temperature from Kelvin to Celsius.
+
+    Parameters
+    ----------
+    T
+       Temperature in Kelvin.
+
+    Returns
+    -------
+
+    C
+        Temperature in Celsius.
+
+    """
+
+    return T + constants.Tnull
 
 
 def celsius_to_kelvin(C):
-    '''
-    Calculate temperature in Kelvin
-    '''
-    return C - Tnull
+    """
+    Convert the temperature from Celsius to Kelvin.
+
+    Parameters
+    ----------
+
+    C
+        Temperature in Celsius.
+
+    Returns
+    -------
+    T
+       Temperature in Kelvin.
+    """
+
+    return C - constants.Tnull
 
 
 def T_virt_rh(T, rh, p):
@@ -36,14 +66,21 @@ def T_virt_rh(T, rh, p):
     Calculate the virtual temperature from air temperature,
     pressure, and relative humidity.
 
-    Input:
-    T is in K
-    rh is in Pa/Pa
-    p is in Pa
+    Parameters
+    ----------
+    T
+        Temperature in in K
+    rh
+        relative humidity in Pa/Pa
+    p
+        pressure in Pa
 
-    Output:
-    T_virt in K
+    Returns
+    -------
+    T_virt
+        Virtual temperature in K
     '''
+
     with np.errstate(divide='ignore', invalid='ignore'):
         if np.any(rh > 5):
             raise TypeError("rh must not be in %")
@@ -56,11 +93,16 @@ def T_virt_q(T, q):
     Calculate the virtual temperature from air temperature and specific
     humidity.
 
-    Input:
-    T is in K
-    q is in kg/kg
+    Parameters
+    ----------
+    T
+        Temperature in in K
+    q
+        specific humidity in kg/kg
 
-    Output:
-    T_virt in K
+    Returns
+    -------
+    T_virt
+        Virtual temperature in K
     '''
-    return T + T * (Rvapor/Rair-1) * q
+    return T + T * (constants.Rvapor/constants.Rair-1) * q
