@@ -58,7 +58,8 @@ def rh2q(rh,T,p,e_sat_func=e_sat_gg_water):
     Output
     q in kg/kg
     '''
-    if np.any(rh > 5): raise TypeError("rh must not be in %")
+    with np.errstate(divide='ignore',invalid='ignore'):
+        if np.any(rh > 5): raise TypeError("rh must not be in %")
     
     eStar = e_sat_func(T)
     e = rh*eStar
