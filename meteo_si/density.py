@@ -11,8 +11,11 @@ import numpy as np
 from .due import due, Doi
 
 from .constants import *
-from .humidity import *
-from .temperature import *
+from .humidity import rh2q
+# from .temperature import *
+
+
+__all__ = ["moist_rho_rh", "moist_rho_q"]
 
 
 
@@ -33,7 +36,7 @@ def moist_rho_rh(p,T,rh,*qm):
 
 	
 	'''
-	if np.any(rh > 5): raise TypeError("rh must not be in %")
+	if np.any(rh > 5): raise ValueError("rh must not be in %")
 	
 	q = rh2q(rh,T,p)
 	
@@ -67,7 +70,7 @@ def moist_rho_q(p,T,q,*qm):
 	
 	if np.any(moist_rho_q < 0):
 		if np.any(moist_rho_q < -0.001): 
-			raise ValueError("meteoSI.moist_rho_q calculated negative densities!")
+			raise ValueError("calculated negative densities!")
 		else:
 			try: moist_rho_q[moist_rho_q<0] = 0
 			except: moist_rho_q = 0

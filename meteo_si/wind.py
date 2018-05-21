@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 from .version import __version__ 
-from .meteo_si import * 
+
 from .constants import * 
-from .temperature import * 
-from .humidity import * 
-from .density import * 
 
 '''
 Helper functions to deal with wind observations.
@@ -55,7 +52,7 @@ def nan_circular_mean( angles):
 	y = np.nansum(np.sin(angles))
 	mean = np.arctan2(y, x)
 	if mean < 0:
-	mean= mean +(np.pi*2)
+		mean= mean +(np.pi*2)
 	return mean
 
 def circular_mean_deg( angles):
@@ -95,6 +92,4 @@ def nan_circular_mean_deg( angles):
         The circular mean in degrees.
 
 	"""
-	return np.rad2deg(nan_circular_mean(np.deg2rad(angles))
-
-
+	return np.rad2deg(nan_circular_mean(np.deg2rad(angles)))

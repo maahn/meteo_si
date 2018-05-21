@@ -11,9 +11,25 @@ import numpy as np
 from .due import due, Doi
 
 from .constants import *
-from .humidity import *
-from .density import *
+from .humidity import rh2q
 
+
+
+__all__ = ["kelvin_2_celsius", "celsius_to_kelvin","T_virt_rh","T_virt_q"]
+
+
+def kelvin_2_celsius(T):
+	'''
+	Calculate temperature in Celsius
+	'''
+
+	return T + Tnull
+
+def celsius_to_kelvin(C):
+	'''
+	Calculate temperature in Kelvin
+	'''
+	return C - Tnull
 
 
 def T_virt_rh(T,rh,p):

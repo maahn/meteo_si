@@ -2,9 +2,10 @@
 from __future__ import absolute_import, division, print_function
 from .version import __version__ 
 # from .meteo_si import * 
-from .constants import * 
-from .temperature import * 
-from .humidity import * 
-from .density import * 
-from .wind import * 
+
+from . import constants 
+from . import temperature 
+from . import humidity 
+from . import density 
+from . import wind 
 
