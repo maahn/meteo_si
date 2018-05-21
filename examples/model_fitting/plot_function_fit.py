@@ -3,7 +3,7 @@
 Fitting a function with meteo_si
 ================================
 
-Shablona contains a number of tools for fitting functions to
+Meteo SI contains a number of tools for fitting functions to
 data. This example shows us how to load data into python, fit
 a function to our datapoints with meteo_si, and then plot the
 result.

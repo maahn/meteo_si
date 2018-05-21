@@ -3,7 +3,7 @@
 Welcome to meteo_si's documentation!
 ====================================
 
-`Shablona` is a template for a small scientific Python project. 
+`Meteo SI` is a template for a small scientific Python project. 
 
 To see how to use it, please refer to the `README file 
 <https://github.com/uwescience/meteo_si/blob/master/README.md>`_ in the Github repository.
