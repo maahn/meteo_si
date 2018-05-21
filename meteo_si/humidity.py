@@ -45,7 +45,7 @@ def q2e(q,p):
     e=p/((Mwml/q)+1-Mwml)
     return e
 
-def rh2q(rh,T,p):
+def rh2q(rh,T,p,e_sat_func=e_sat_gg_water):
     '''
     Calculate the specific humidity from relative humidity, air temperature,
     and pressure. 
@@ -60,14 +60,14 @@ def rh2q(rh,T,p):
     '''
     if np.any(rh > 5): raise TypeError("rh must not be in %")
     
-    eStar = e_sat_gg_water(T)
+    eStar = e_sat_func(T)
     e = rh*eStar
     q = e2q(e,p)
     del e, eStar
     return q
 
     
-def rh2a(rh,T):
+def rh2a(rh,T,e_sat_func=e_sat_gg_water):
     '''
     Calculate the absolute humidity from relative humidity, air temperature,
     and pressure.
@@ -83,11 +83,11 @@ def rh2a(rh,T):
     
     if np.any(rh > 5): raise TypeError("rh must not be in %")
 
-    e = rh*e_sat_gg_water(T)
+    e = rh*e_sat_func(T)
     a = e/(Rvapor*T)
     return a
 
-def a2rh(a,T):
+def a2rh(a,T,e_sat_func=e_sat_gg_water):
         '''
         Calculate the relative from absolute humidity and air temperature.
 
@@ -101,12 +101,12 @@ def a2rh(a,T):
         '''
         
         e = a*(Rvapor*T)
-        rh = e/e_sat_gg_water(T)
+        rh = e/e_sat_func(T)
         return rh
   
     
     
-def q2rh(q,T,p):
+def q2rh(q,T,p,e_sat_func=e_sat_gg_water):
     '''
     Calculate relative humidity from specific humidity
     
@@ -123,9 +123,8 @@ def q2rh(q,T,p):
     # if neAvail: e = ne.evaluate("p/(Mwml*((1/q)+(1/(Mwml)-1)))")
     e = p/(Mwml*((1/q)+(1/(Mwml)-1)))
     
-    eStar = e_sat_gg_water(T)
+    eStar = e_sat_func(T)
     rh = e/eStar
-    del e,eStar
     return rh
     
 def e_sat_gg_water(T):
