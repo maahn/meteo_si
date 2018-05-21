@@ -6,6 +6,28 @@ Welcome to meteo_si's documentation!
  otherwise, all units are SI. 
 
 
+Download
+--------
+
+The code is available at https://github.com/maahn/meteo_si
+
+Installation
+------------
+
+Change to the folder containing the project and do ::
+
+  python setup.py install
+
+in the terminal. If you do not have root privileges, you can also do ::
+
+  python setup.py install --user
+
+which will install meteo_si in userbase/lib/pythonX.Y/site-packages or ::
+
+  python setup.py install --home=~
+
+which will install meteo_si in ~/lib/python.
+
 
 
 Density
