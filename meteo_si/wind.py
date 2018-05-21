@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
-from .version import __version__ 
+import numpy as np
 
-from .constants import * 
+# from .constants import *
 
 '''
 Helper functions to deal with wind observations.
@@ -10,15 +10,14 @@ Helper functions to deal with wind observations.
 '''
 
 
-
-def circular_mean( angles):
-	"""
+def circular_mean(angles):
+    """
     Compute the arithmetic circular mean, not ignoring NaNs.
 
     Parameters
     ----------
     angles : list or array
-       The angles for averaging in radians. 
+       The angles for averaging in radians.
 
     Returns
     -------
@@ -26,20 +25,21 @@ def circular_mean( angles):
     mean : float
         The circular mean in radians.
 
-	"""
-	if np.any(np.isnan(angles)):
-		return np.nan
-	else:
-		return nan_circular_mean( angles)
+    """
+    if np.any(np.isnan(angles)):
+        return np.nan
+    else:
+        return nan_circular_mean(angles)
 
-def nan_circular_mean( angles):
-	"""
+
+def nan_circular_mean(angles):
+    """
     Compute the arithmetic circular mean, ignoring NaNs.
 
     Parameters
     ----------
     angles : list or array
-       The angles for averaging in radians. 
+       The angles for averaging in radians.
 
     Returns
     -------
@@ -47,22 +47,23 @@ def nan_circular_mean( angles):
     mean : float
         The circular mean in radians.
 
-	"""
-	x = np.nansum(np.cos(angles))
-	y = np.nansum(np.sin(angles))
-	mean = np.arctan2(y, x)
-	if mean < 0:
-		mean= mean +(np.pi*2)
-	return mean
+    """
+    x = np.nansum(np.cos(angles))
+    y = np.nansum(np.sin(angles))
+    mean = np.arctan2(y, x)
+    if mean < 0:
+        mean = mean + (np.pi*2)
+    return mean
 
-def circular_mean_deg( angles):
-	"""
+
+def circular_mean_deg(angles):
+    """
     Compute the arithmetic circular mean, not ignoring NaNs.
 
     Parameters
     ----------
     angles : list or array
-       The angles for averaging in degrees. 
+       The angles for averaging in degrees.
 
     Returns
     -------
@@ -70,20 +71,21 @@ def circular_mean_deg( angles):
     mean : float
         The circular mean in degrees.
 
-	"""
-	if np.any(np.isnan(angles)):
-		return np.nan
-	else:
-		return nan_circular_mean_deg( angles)
+    """
+    if np.any(np.isnan(angles)):
+        return np.nan
+    else:
+        return nan_circular_mean_deg(angles)
 
-def nan_circular_mean_deg( angles):
-	"""
+
+def nan_circular_mean_deg(angles):
+    """
     Compute the arithmetic circular mean, ignoring NaNs.
 
     Parameters
     ----------
     angles : list or array
-       The angles for averaging in degrees. 
+       The angles for averaging in degrees.
 
     Returns
     -------
@@ -91,5 +93,5 @@ def nan_circular_mean_deg( angles):
     mean : float
         The circular mean in degrees.
 
-	"""
-	return np.rad2deg(nan_circular_mean(np.deg2rad(angles)))
+    """
+    return np.rad2deg(nan_circular_mean(np.deg2rad(angles)))

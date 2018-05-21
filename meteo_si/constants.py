@@ -8,7 +8,7 @@ Rvapor = 461.5  # J/kg/K
 Cp = 1005.0  # J/kg/K specific heat capacity
 Gamma = -Grav/Cp  # =-0.0097..K/m  adiabatic temperature gradient
 Lv = 2.5e6  # J/kg  bei 0C Lv heat of vaporization
-Mwml = 0.622 # dimlos, Molmassenverhaeltnis
-Tnull = -273.15 # degC absolute zero
-Kadiab = Rair/Cp # dimensionless adiabatic exponenet
+Mwml = 0.622  # dimlos, Molmassenverhaeltnis
+Tnull = -273.15  # degC absolute zero
+Kadiab = Rair/Cp  # dimensionless adiabatic exponenet
 G = 9.80665  # gravitational acceleration

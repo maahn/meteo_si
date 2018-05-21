@@ -32,7 +32,8 @@ long_description = """
 
 Meteo SI
 ========
-Meteo SI is a collection of meteorological formulas. All units follow the SI standard unless noted otherwise.
+Meteo SI is a collection of meteorological formulas. All units follow the SI
+standard unless noted otherwise.
 
 License
 =======

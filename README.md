@@ -1,60 +1,10 @@
 ## meteo_si
-[![Build Status](https://travis-ci.org/uwescience/meteo_si.svg?branch=master)](https://travis-ci.org/uwescience/meteo_si)
+<!-- [![Build Status](https://travis-ci.org/uwescience/meteo_si.svg?branch=master)](https://travis-ci.org/uwescience/meteo_si) -->
 
-Meteo SI is a template project for small scientific python projects. The
-recommendations we make here follow the standards and conventions of much of
-the scientific Python eco-system. Following these standards and recommendations
-will make it easier for others to use your code, and can make it easier for you
-to port your code into other projects and collaborate with other users of this
-eco-system.
+Meteo SI is a collection of functions for atmospheric sciences following the 
+SI-convention (unless stated otherwise)
 
-To use it as a template for your own project, you will need to follow the
-instructions at the [bottom of this page](#using-meteo_si-as-a-template).
-
-First, let me explain all the different moving parts that make up a small
-scientific python project, and all the elements which allow us to effectively
-share it with others, test it, document it, and track its evolution.
-
-### Organization of the  project
-
-The project has the following structure:
-
-    meteo_si/
-      |- README.md
-      |- meteo_si/
-         |- __init__.py
-         |- meteo_si.py
-         |- due.py
-         |- data/
-            |- ...
-         |- tests/
-            |- ...
-      |- doc/
-         |- Makefile
-         |- conf.py
-         |- sphinxext/
-            |- ...
-         |- _static/
-            |- ...
-      |- setup.py
-      |- .travis.yml
-      |- .mailmap
-      |- appveyor.yml
-      |- LICENSE
-      |- Makefile
-      |- ipynb/
-         |- ...
-
-
-In the following sections we will examine these elements one by one. First,
-let's consider the core of the project. This is the code inside of
-`meteo_si/meteo_si.py`. The code provided in this file is intentionally rather
-simple. It implements some simple curve-fitting to data from a psychophysical
-experiment. It's not too important to know what it does, but if you are really
-interested, you can read all about it
-[here](http://arokem.github.io/2014-08-12-learn-optimization.html).
-
-### Module code
+<!-- ### Module code
 
 We place the module code in a file called `meteo_si.py` in directory called
 `meteo_si`. This structure is a bit confusing at first, but it is a simple way
@@ -507,3 +457,4 @@ your needs.
 
 At this point, make another commit, and continue to develop your own code based
 on this template.
+ -->
