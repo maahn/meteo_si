@@ -47,7 +47,7 @@ def moist_rho_rh(p, T, rh, *qm):
         if np.any(rh > 5):
             raise TypeError("rh must not be in %")
 
-    q = humidity.rh2q(rh, T, p)
+    q = meteo_si.humidity.rh2q(rh, T, p)
 
     return moist_rho_q(p, T, q, *qm)
 
@@ -86,7 +86,9 @@ def moist_rho_q(p, T, q, *qm):
     else:
         qm = 0
 
-    moist_rho_q = p/(constants.Rair*T*(1+(constants.Rvapor/constants.Rair-1)*q-qm))
+    moist_rho_q = p / (meteo_si.constants.Rair * T *
+                       (1 + (meteo_si.constants.Rvapor /
+                        meteo_si.constants.Rair-1) * q - qm))
 
     if np.any(moist_rho_q < 0):
         if np.any(moist_rho_q < -0.001):

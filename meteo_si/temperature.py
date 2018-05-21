@@ -39,7 +39,7 @@ def kelvin_2_celsius(T):
 
     """
 
-    return T + constants.Tnull
+    return T + meteo_si.constants.Tnull
 
 
 def celsius_to_kelvin(C):
@@ -58,7 +58,7 @@ def celsius_to_kelvin(C):
        Temperature in Kelvin.
     """
 
-    return C - constants.Tnull
+    return C - meteo_si.constants.Tnull
 
 
 def T_virt_rh(T, rh, p):
@@ -85,7 +85,7 @@ def T_virt_rh(T, rh, p):
         if np.any(rh > 5):
             raise TypeError("rh must not be in %")
 
-    return T_virt_q(T, humidity.rh2q(rh, T, p))
+    return T_virt_q(T, meteo_si.humidity.rh2q(rh, T, p))
 
 
 def T_virt_q(T, q):
@@ -105,4 +105,4 @@ def T_virt_q(T, q):
     T_virt
         Virtual temperature in K
     '''
-    return T + T * (constants.Rvapor/constants.Rair-1) * q
+    return T + T * (meteo_si.constants.Rvapor/meteo_si.constants.Rair-1) * q

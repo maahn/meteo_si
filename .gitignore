@@ -6,3 +6,5 @@ auto_examples/
 gen_api/
 meteo_si.egg-info/
 ._*.py
+build
+dist
