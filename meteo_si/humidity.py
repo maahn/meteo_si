@@ -8,10 +8,10 @@
 from __future__ import absolute_import, division, print_function
 import numpy as np
 
-from .due import due, Doi
+# from .due import due, Doi
 
 from .constants import *
-from .temperature import kelvin_2_celsius
+from . import temperature
 
 
 __all__ = ["e2q", "q2e","rh2q","rh2a","rh_to_iwv", "e_sat_gg_ice", "e_sat_gg_water", "q2rh", "a2rh"]
@@ -138,7 +138,7 @@ def e_sat_gg_water(T):
     Output:
     e_sat_gg_water in Pa.
     '''
-    T = kelvin_2_celsius(T)
+    T = temperature.kelvin_2_celsius(T)
     e_sat_gg_water =100 * 6.112 *np.exp(17.62 * T/(243.12 + T))
     return e_sat_gg_water
 
@@ -152,7 +152,7 @@ def e_sat_gg_ice(T):
     Output:
     e_sat_gg_ice in Pa.
     '''
-    T = kelvin_2_celsius(T)
+    T = temperature.kelvin_2_celsius(T)
     e_sat_gg_ice =100 * 6.112 *np.exp(22.46 * T/(272.62 + T))
     return e_sat_gg_ice
 

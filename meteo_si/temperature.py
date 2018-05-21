@@ -8,10 +8,10 @@
 from __future__ import absolute_import, division, print_function
 import numpy as np
 
-from .due import due, Doi
+# from .due import due, Doi
 
 from .constants import *
-from .humidity import rh2q
+from . import humidity
 
 
 
@@ -46,7 +46,7 @@ def T_virt_rh(T,rh,p):
   T_virt in K
   '''
   if np.any(rh > 5): raise TypeError("rh must not be in %")
-  return T_virt_q(T,rh2q(rh,T,p))
+  return T_virt_q(T,humidity.rh2q(rh,T,p))
 
 def T_virt_q(T,q):
     '''

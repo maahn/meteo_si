@@ -8,10 +8,10 @@
 from __future__ import absolute_import, division, print_function
 import numpy as np
 
-from .due import due, Doi
+# from .due import due, Doi
 
 from .constants import *
-from .humidity import rh2q
+from . import humidity
 # from .temperature import *
 
 
@@ -38,7 +38,7 @@ def moist_rho_rh(p,T,rh,*qm):
 	'''
 	if np.any(rh > 5): raise ValueError("rh must not be in %")
 	
-	q = rh2q(rh,T,p)
+	q = humidity.rh2q(rh,T,p)
 	
 	return moist_rho_q(p,T,q,*qm)
 
