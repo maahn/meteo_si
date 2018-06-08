@@ -16,7 +16,7 @@ import meteo_si.humidity
 __all__ = ["moist_rho_rh", "moist_rho_q"]
 
 
-def moist_rho_rh(p, T, rh, *qm):
+def moist_rho_rh(p, T, rh, qm=0):
     """
     Compute the arithmetic circular mean, ignoring NaNs.
 
@@ -28,9 +28,9 @@ def moist_rho_rh(p, T, rh, *qm):
         Temperature in K
     rh:
         Relative humidity in Pa/Pa
-    *qm, list, optional
-        mixing ratios in kg/kg of other species which contribute to the air
-        mass! (ice, snow, cloud etc.)
+    qm: optional
+        sum of mixing ratios in kg/kg of other species which contribute to
+        the air mass! (ice, snow, cloud etc.)
 
     Returns
     -------
@@ -49,10 +49,10 @@ def moist_rho_rh(p, T, rh, *qm):
 
     q = meteo_si.humidity.rh2q(rh, T, p)
 
-    return moist_rho_q(p, T, q, *qm)
+    return moist_rho_q(p, T, q, qm)
 
 
-def moist_rho_q(p, T, q, *qm):
+def moist_rho_q(p, T, q, qm=0):
     """
     Compute the arithmetic circular mean, ignoring NaNs.
 
@@ -64,9 +64,9 @@ def moist_rho_q(p, T, q, *qm):
         Temperature in K
     q:
         specific humidity in kg/kg
-    *qm, list, optional
-        mixing ratios in kg/kg of other species which contribute to the air
-        mass! (ice, snow, cloud etc.)
+    qm: optional
+        sum of mixing ratios in kg/kg of other species which contribute to
+        the air mass! (ice, snow, cloud etc.)
 
     Returns
     -------
@@ -79,12 +79,6 @@ def moist_rho_q(p, T, q, *qm):
     moist_rho_q(p,T,q,q_ice,q_snow,q_rain,q_cloud,q_graupel,q_hail)
 
     """
-    if len(qm) > 0:
-        # get rid of masked data!
-        qm[qm < 0] = 0
-        qm = np.sum(qm, axis=0)
-    else:
-        qm = 0
 
     moist_rho_q = p / (meteo_si.constants.Rair * T *
                        (1 + (meteo_si.constants.Rvapor /
