@@ -13,8 +13,57 @@ import meteo_si.density
 import meteo_si.temperature
 
 
-__all__ = ["e2q", "q2e", "rh2q", "rh2a", "rh_to_iwv", "e_sat_gg_ice",
-           "e_sat_gg_water", "q2rh", "a2rh"]
+__all__ = ['a2e', 'e2a', "e2q", "q2e", "rh2q", "rh2a", "rh_to_iwv",
+           "e_sat_gg_ice", "e_sat_gg_water", "q2rh", "a2rh"]
+
+
+def a2e(a, T):
+    """
+    Calculate water vapor pressure from the absolute humidity and air
+    temperature.
+
+    Parameters
+    ----------
+    a:
+        absolute humidity [kg / m3]
+    T:
+        Temperature in K
+
+    Returns
+    -------
+
+    float :
+        vapor pressure [Pa]
+
+    """
+    e = a * T * meteo_si.constants.Rvapor
+
+    return e
+
+
+def e2a(e, T):
+    """
+    Calculate the absolute humidity from water vapor pressure and air
+    temperature.
+
+    Parameters
+    ----------
+    e:
+        vapor pressure [Pa]
+    T:
+        Temperature in K
+
+    Returns
+    -------
+
+    float :
+        absolute humidity [kg / m3]
+
+    """
+
+    a = e / (T * meteo_si.constants.Rvapor)
+
+    return a
 
 
 def e_sat_gg_water(T):
@@ -164,7 +213,7 @@ def rh2a(rh, T, e_sat_func=e_sat_gg_water):
     -------
 
     float :
-        absolute humidity [kg / kg]
+        absolute humidity [kg / m3]
 
     """
 
@@ -185,7 +234,7 @@ def a2rh(a, T, e_sat_func=e_sat_gg_water):
     Parameters
     ----------
     a:
-        absolute humidity [kg / kg]
+        absolute humidity [kg / m3]
     T:
         Temperature in K
     e_sat_func: func, optional
