@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import, division, print_function
 import numpy as np
-
-# from .constants import *
 
 '''
 Functions to deal with wind observations.

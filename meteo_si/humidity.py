@@ -3,7 +3,6 @@
 # (c) Mario Mech 2009 (python)
 # (c) Maximilian Maahn 2011 (python)
 
-from __future__ import absolute_import, division, print_function
 import numpy as np
 
 # from .due import due, Doi

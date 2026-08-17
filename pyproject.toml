@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "meteo_si"
+dynamic = ["version"]
+description = "meteo_si: Meteo SI is a collection of meteorological formulas"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [
+    { name = "Maximilian Maahn", email = "maximilian.maahn@colorado.edu" },
+]
+maintainers = [
+    { name = "Maximilian Maahn", email = "maximilian.maahn@colorado.edu" },
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Scientific/Engineering",
+]
+dependencies = [
+    "numpy",
+]
+
+[project.urls]
+Homepage = "https://github.com/maahn/meteo_si"
+Documentation = "https://meteo-si.readthedocs.io/en/latest/"
+Repository = "https://github.com/maahn/meteo_si"
+
+[project.optional-dependencies]
+test = ["pytest", "pytest-cov"]
+lint = ["flake8"]
+
+[tool.setuptools.dynamic]
+version = { attr = "meteo_si.version.__version__" }
+
+[tool.setuptools.packages.find]
+include = ["meteo_si*"]
