@@ -2,8 +2,7 @@
 _version_major = 0
 _version_minor = 1
 _version_micro = 1  # use '' for first of series, number for 1 and above
-_version_extra = 'dev'
-# _version_extra = ''  # Uncomment this for full releases
+_version_extra = ''  # use e.g. 'dev' for a pre-release
 
 # Construct full version string from these.
 _ver = [_version_major, _version_minor]
