@@ -44,11 +44,13 @@ CI (`.github/workflows/tests.yml`) runs the test matrix on Python 3.10–3.14 ac
 
 - `meteo_si/__init__.py` imports each topic module as a **namespace**, not a flat function list:
   ```python
-  from . import temperature, humidity, density, wind, constants
+  from . import temperature, humidity, density, wind, constants, atmosphere
   ```
   So calling code uses `meteo_si.humidity.rh2q(...)`, `meteo_si.density.moist_rho_q(...)`, etc. — not `meteo_si.rh2q(...)`. Keep new functions inside the appropriate topic module and export them via that module's `__all__`.
 
-- **Module responsibilities and dependency direction**: `constants.py` (no internal deps) → `temperature.py` / `humidity.py` (both depend on `constants`, and `temperature` also depends on `humidity` for `T_virt_rh`) → `density.py` (depends on `constants` and `humidity`). `wind.py` is independent (circular-mean helpers only). Respect this layering when adding functions — e.g. don't import `density` from `humidity`.
+- **Module responsibilities and dependency direction**: `constants.py` (no internal deps) → `temperature.py` / `humidity.py` (both depend on `constants`, and `temperature` also depends on `humidity` for `T_virt_rh`) → `density.py` (depends on `constants` and `humidity`). `wind.py` and `atmosphere.py` are both independent (circular-mean helpers, and the 1976 US Standard Atmosphere model, respectively — neither needs anything from the other modules). Respect this layering when adding functions — e.g. don't import `density` from `humidity`.
+
+- `humidity.py` has two saturation-vapor-pressure-over-water formulas that are **not interchangeable**: `e_sat_gg_water` (WMO CIMO Guide 2008, Magnus-type) and `e_sat_goffgratch_water` (Goff & Gratch 1946, more accurate over a wider temperature range but pricier to evaluate). Despite the name, `e_sat_gg_water` is the CIMO one, not Goff-Gratch — that's legacy naming, kept for backward compatibility. Every humidity function that depends on saturation pressure (`rh2q`, `rh2a`, `a2rh`, `q2rh`, `rh_to_iwv`) takes an `e_sat_func` parameter (defaulting to `e_sat_gg_water`) for exactly this reason — pick explicitly rather than assuming the default is "the accurate one" or "the Goff-Gratch one".
 
 - Physical quantities are passed as bare floats/arrays with units documented per-function in the docstring (numpy-style `Parameters`/`Returns` sections), not via unit-aware types. When adding a function, follow the existing docstring convention exactly (units in brackets, e.g. `[Pa]`, `[kg/kg]`, `[kg/m3]`) since that's the only unit documentation that exists.
 

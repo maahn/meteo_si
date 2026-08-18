@@ -6,6 +6,7 @@ from . import humidity
 from . import density
 from . import wind
 from . import constants
+from . import atmosphere
 
 __all__ = [
     "__version__",
@@ -14,4 +15,5 @@ __all__ = [
     "density",
     "wind",
     "constants",
+    "atmosphere",
 ]
