@@ -13,7 +13,8 @@ import meteo_si.temperature
 
 
 __all__ = ['a2e', 'e2a', "e2q", "q2e", "rh2q", "rh2a", "rh_to_iwv",
-           "e_sat_gg_ice", "e_sat_gg_water", "q2rh", "a2rh"]
+           "e_sat_gg_ice", "e_sat_gg_water", "e_sat_goffgratch_water",
+           "q2rh", "a2rh"]
 
 
 def a2e(a, T):
@@ -109,6 +110,37 @@ def e_sat_gg_ice(T):
     T = meteo_si.temperature.kelvin_2_celsius(T)
     e_sat_gg_ice = 100 * 6.112 * np.exp(22.46 * T / (272.62 + T))
     return e_sat_gg_ice
+
+
+def e_sat_goffgratch_water(T):
+    """
+    Calculates the saturation pressure over water after Goff and Gratch
+    (1946). More accurate than :func:`e_sat_gg_water` over a wide
+    temperature range (-90 degC to +80 degC), at the cost of a more
+    expensive formula -- the two are not interchangeable results, just two
+    different approximations of the same physical quantity.
+
+    Source: Smithsonian Tables 1984, after Goff and Gratch 1946.
+
+    Parameters
+    ----------
+    T:
+        Temperature in K
+
+    Returns
+    -------
+
+    float :
+        saturation pressure [Pa]
+
+    """
+    e_sat_goffgratch_water = 100 * 1013.246 * 10**(
+        -7.90298*(373.16/T-1)
+        + 5.02808*np.log10(373.16/T)
+        - 1.3816e-7*(10**(11.344*(1-T/373.16))-1)
+        + 8.1328e-3*(10**(-3.49149*(373.16/T-1))-1)
+    )
+    return e_sat_goffgratch_water
 
 
 def e2q(e, p):
@@ -286,7 +318,8 @@ def q2rh(q, T, p, e_sat_func=e_sat_gg_water):
     return rh
 
 
-def rh_to_iwv(relhum_lev, temp_lev, press_lev, hgt_lev):
+def rh_to_iwv(relhum_lev, temp_lev, press_lev, hgt_lev,
+              e_sat_func=e_sat_gg_water):
     """
     Integrate relative humidity to obtain the integrated water vapor (IWV)
     column.
@@ -301,6 +334,9 @@ def rh_to_iwv(relhum_lev, temp_lev, press_lev, hgt_lev):
         pressure at levels [Pa]
     hgt_levels:
         altitude of levels [m]
+    e_sat_func: func, optional
+        Function to estimate the saturation pressure. E.g. e_sat_gg_water for
+        water and e_sat_gg_ice for ice.
 
     Returns
     -------
@@ -317,7 +353,7 @@ def rh_to_iwv(relhum_lev, temp_lev, press_lev, hgt_lev):
     xp = -1.*np.log(press_lev[..., 1:] / press_lev[..., 0:-1]) / dz
     press = -1.*press_lev[..., 0:-1] / xp*(np.exp(-xp*dz)-1.) / dz
 
-    q = rh2q(relhum, temp, press)
+    q = rh2q(relhum, temp, press, e_sat_func=e_sat_func)
     rho_moist = meteo_si.density.moist_rho_q(press, temp, q)
 
     return np.sum(q*rho_moist*dz)
