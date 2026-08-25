@@ -17,7 +17,7 @@ __all__ = ["moist_rho_rh", "moist_rho_q"]
 
 def moist_rho_rh(p, T, rh, qm=0):
     """
-    Compute the arithmetic circular mean, ignoring NaNs.
+    Compute the density of moist air from relative humidity.
 
     Parameters
     ----------
@@ -53,7 +53,7 @@ def moist_rho_rh(p, T, rh, qm=0):
 
 def moist_rho_q(p, T, q, qm=0):
     """
-    Compute the arithmetic circular mean, ignoring NaNs.
+    Compute the density of moist air from specific humidity.
 
     Parameters
     ----------
