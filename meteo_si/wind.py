@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-import numpy as np
-
 '''
 Functions to deal with wind observations.
 
 '''
+
+import numpy as np
 
 
 def circular_mean(angles):

@@ -3,14 +3,14 @@
 #     algorithm, http://www.pdas.com/programs/atmos.f90)
 # (c) Maximilian Maahn 2011 (Python translation)
 
-from collections.abc import Iterable
-
-import numpy as np
-
 '''
 Functions to compute properties of the 1976 US Standard Atmosphere.
 
 '''
+
+from collections.abc import Iterable
+
+import numpy as np
 
 __all__ = ["usStandard"]
 
@@ -43,7 +43,6 @@ def _Atmosphere(alt):
 
     REARTH = 6369.0  # radius of the Earth (km)
     GMR = 34.163195  # hydrostatic constant
-    NTAB = 8  # number of entries in the defining tables
 
     htab = np.array([0.0, 11.0, 20.0, 32.0, 47.0, 51.0, 71.0, 84.852])
     ttab = np.array(
@@ -65,27 +64,21 @@ def _Atmosphere(alt):
     # convert geometric to geopotential altitude
     h = alt * REARTH / (alt + REARTH)
 
-    i = 1
-    j = NTAB  # setting up for binary search
-    while True:
-        k = (i + j) // 2  # integer division
-        if h < htab[k - 1]:
-            j = k
-        else:
-            i = k
-        if j <= i + 1:
-            break
+    # index of the layer containing h; altitudes below the first and above
+    # the last table entry are extrapolated from the outermost layers
+    i = int(np.clip(np.searchsorted(htab, h, side='right') - 1,
+                    0, len(htab) - 2))
 
-    tgrad = gtab[i - 1]  # i will be in 1...NTAB-1
-    tbase = ttab[i - 1]
-    deltah = h - htab[i - 1]
+    tgrad = gtab[i]
+    tbase = ttab[i]
+    deltah = h - htab[i]
     tlocal = tbase + tgrad * deltah
     theta = tlocal / ttab[0]  # temperature ratio
 
     if tgrad == 0.0:  # pressure ratio
-        delta = ptab[i-1] * np.exp(-GMR * deltah / tbase)
+        delta = ptab[i] * np.exp(-GMR * deltah / tbase)
     else:
-        delta = ptab[i-1] * (tbase / tlocal) ** (GMR / tgrad)
+        delta = ptab[i] * (tbase / tlocal) ** (GMR / tgrad)
 
     sigma = delta / theta  # density ratio
 
@@ -115,24 +108,19 @@ def usStandard(height):
 
     """
 
-    # check whether height is float or array:
     if isinstance(height, Iterable):
-        density = np.ones_like(height, dtype=float)
-        pressure = np.ones_like(height, dtype=float)
-        temperature = np.ones_like(height, dtype=float)
-        for ii, hh in enumerate(height):
-            # the reference algorithm processes only a single value at a
-            # time, so make sure it is not itself a vector
-            assert not isinstance(hh, Iterable)
-            density[ii], pressure[ii], temperature[ii] = (
-                _Atmosphere(hh / 1000.0)
-            )
+        height = np.asarray(height, dtype=float)
+        assert height.ndim == 1, (
+            "height must be a scalar or a one-dimensional array")
+        # the reference algorithm processes only a single value at a time
+        ratios = np.array([_Atmosphere(hh / 1000.0) for hh in height])
+        sigma, delta, theta = ratios.reshape(-1, 3).T
     else:
-        density, pressure, temperature = _Atmosphere(height / 1000.0)
+        sigma, delta, theta = _Atmosphere(height / 1000.0)
 
-    # results are normed to standard conditions:
-    density = density * 1.2250
-    pressure = pressure * 101325
-    temperature = temperature * 288.15
+    # the ratios are relative to sea-level standard conditions
+    density = sigma * 1.2250
+    pressure = delta * 101325
+    temperature = theta * 288.15
 
     return density, pressure, temperature
