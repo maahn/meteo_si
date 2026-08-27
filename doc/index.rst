@@ -18,6 +18,10 @@ Install the latest release from PyPI ::
 
   pip install meteo_si
 
+or from conda-forge ::
+
+  conda install conda-forge::meteo_si
+
 or, to install from a local checkout of the source, change to the folder
 containing the project and do ::
 
